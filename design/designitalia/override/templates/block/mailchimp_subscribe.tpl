@@ -1,5 +1,5 @@
 {if fetch(user, has_access_to, hash('module', 'mailchimp', 'function', 'subscribe'))}
-<div class="Grid u-background-80 u-margin-bottom-m u-padding-all-xxl">
+<div class="Grid u-background-80 u-padding-all-xxl">
     <div class="Grid-cell u-sizeFull">
         <div class="u-padding-all-l u-layoutCenter u-textCenter">
             <h3 class="u-text-h3 u-color-white">{$block.name|wash()}</h3>

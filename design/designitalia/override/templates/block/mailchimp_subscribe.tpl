@@ -39,8 +39,8 @@
                 success: function (data) {
                     if (data.error){
                         feedbackContainer.html(data.error).addClass('alert-warning ').show();
-                    }else{
-                        feedbackContainer.html(feedbackText).addClass('alert-warning ').show();
+                    }else{                        
+                        feedbackContainer.html(feedbackText + ' ' + data.message).addClass('alert-warning ').show();
                     }
                 }
             });

@@ -21,23 +21,27 @@ try {
     }
 
     $data['email'] = $emailAddress;
+    $data['message'] = '';
 
     $mailChimp = new MailChimp(OcMailChimp::getApiKey());
     $result = $mailChimp->post("lists/$listId/members", [
         'email_address' => $emailAddress,
-        'status' => 'subscribed',
+        'status' => OcMailChimp::getSubscribeStatus(),
+        'language' => 'it'
     ]);
 
-    if ($result['status'] == 400) {
-        $data['error'] = "Indirizzo già presente in lista";
-    } elseif ($result['status'] != 'subscribed') {
-        $data['error'] = $result['title'];
-        if ($http->hasVariable('debug')) {
-            $data['response'] = $result;
-        }
+    $data['result'] = $result['status'];
+    if ($http->hasVariable('debug')) {
+        $data['response'] = $result;
     }
 
-    $data['result'] = $result['status'];
+    if (isset($result['title'])){
+        $data['error'] = $result['title'];
+    }
+
+    if ($result['status'] == 'pending') {
+        $data['message'] = "Controlla la tua casella di posta per confermare l'iscrizione";        
+    }
 
 } catch (Exception $e) {
     $data['error'] = $e->getMessage();
